@@ -1,4 +1,4 @@
-Using tutorial by Hamza Mirza to learn how to make http requests in React using Axios
+Creating a github card using React and Axios
 
-Tutorial:
+Resource:
 https://www.youtube.com/watch?v=M-X0Jw2e68A
