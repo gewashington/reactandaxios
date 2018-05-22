@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UserForm from "./components/UserForm";
 import axios from 'axios';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import './App.css';
 
 /*Notes:
@@ -12,7 +13,8 @@ import './App.css';
 
 class App extends Component {
   state = {
-    repos: null
+    repos: null,
+    userData: null
   }
 
   getUser = (e) => {
@@ -24,8 +26,20 @@ class App extends Component {
     .then((res) => {
       // console.log(res)
       const repos = res.data.public_repos;
-      // console.log(repos)
-      this.setState({ repos });
+      const login = res.data.login;
+      const location = res.data.location;
+      const followers = res.data.followers;
+      const following = res.data.following;
+      const avatar_url = res.data.avatar_url;
+        this.setState({
+        repos,
+        login,
+        location,
+        following,
+        followers,
+        avatar_url
+
+      });
     })
   }
   else { return }
@@ -37,9 +51,18 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">HTTP Calls in React</h1>
         </header>
-        <UserForm getUser={this.getUser} />
-        { this.state.repos ? <p>Number of repos: {this.state.repos}</p> :  <p>Please enter a Github username</p> }
+          <div class="card">
+            <div class="container">
+              <img src={this.state.avatar_url}  class="img" />
+            { this.state.login ? <p>{this.state.login}</p> : "" }
+            { this.state.location ? <p>{this.state.location}</p> : "Not Available" }
+            { this.state.followers ? <p>{this.state.followers} Followers</p>  : "" }
+            { this.state.repos ? <p>Number of repos: {this.state.repos}</p> :  "" }
+            { this.state.following ? <p>Following: {this.state.following}</p> :  "" }
+              <UserForm getUser={this.getUser} />
+        </div>
       </div>
+    </div>
     );
   }
 }
